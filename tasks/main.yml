@@ -1,0 +1,36 @@
+---
+# tasks file for ocemr
+- apt_key:
+    url: http://e2r4.com/repo/signing.key
+    state: present
+
+- apt_repository:
+    repo: deb http://e2r4.com/repo {{ ansible_lsb.codename }} main
+    state: present
+    filename: ocemr
+
+- name: Install ocemr
+  apt:
+    pkg: ocemr
+    state: present
+    update_cache: true
+  when: app_server
+
+- name: Install mysql-server
+  apt:
+    pkg: mysql-server
+    state: present
+    update_cache: true
+  when: database_server
+  notify:
+    - Initialize MySQL DB
+
+- name: Configure ocemr
+  template:
+    src: ocemr_settings.py.j2
+    dest: /etc/ocemr/settings.py
+    owner: root
+    group: root
+  when: app_server
+  notify:
+    - Restart Apache2
