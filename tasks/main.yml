@@ -16,12 +16,28 @@
     update_cache: true
   when: app_server
 
+- name: Install gpg
+  apt:
+    pkg: gpg
+    state: present
+    update_cache: true
+  when: database_server
+
 - name: Install mysql-server
   apt:
     pkg: mysql-server
     state: present
     update_cache: true
-  when: database_server
+  when: database_server and ansible_distribution == 'Ubuntu'
+  notify:
+    - Initialize MySQL DB
+
+- name: Install mariadb-server
+  apt:
+    pkg: mariadb-server
+    state: present
+    update_cache: true
+  when: database_server and ansible_distribution == 'Debian'
   notify:
     - Initialize MySQL DB
 
