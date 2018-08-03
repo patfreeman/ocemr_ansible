@@ -20,7 +20,7 @@ Leave the host and port empty to use the local socket.
 * `db_admin_password: changeme`
 
 ### Application configuration
-Options from the [OCEMR](https://github.com.ph1l/ocemr) settings.py
+Options from the [OCEMR](https://github.com/ph1l/ocemr) settings.py
 * `ocemr_debug: False`
 * `server_email: ocemr@server.com`
 * `printer_name: Some_CUPS_Printer`
@@ -38,3 +38,10 @@ Example Inventory
           - db_admin_password: supersecretpassword
           - ocemr_debug: False
 ```
+
+Usage
+-----
+
+    # git clone https://github.com/patfreeman/ocemr_ansible.git ocemr
+    # vi ocemr.yml # Insert Example Inventory and edit to liking with Role Variables
+    # ansible-playbook ocemr.yml
